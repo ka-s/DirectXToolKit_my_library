@@ -81,9 +81,9 @@ void Game::Render()
 void Game::Clear()
 {
     // Clear the views
-    m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), Colors::CornflowerBlue);
-    m_d3dContext->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
-    m_d3dContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
+    Direct3DObject::m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), Colors::CornflowerBlue);
+    Direct3DObject::m_d3dContext->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+    Direct3DObject::m_d3dContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
 }
 
 // Presents the backbuffer contents to the screen
@@ -174,9 +174,9 @@ void Game::CreateDevice()
         featureLevels,                          // list of feature levels this app can support
         _countof(featureLevels),                // number of entries in above list
         D3D11_SDK_VERSION,                      // always set this to D3D11_SDK_VERSION
-        m_d3dDevice.ReleaseAndGetAddressOf(),   // returns the Direct3D device created
+        Direct3DObject::m_d3dDevice.ReleaseAndGetAddressOf(),   // returns the Direct3D device created
         &m_featureLevel,                        // returns feature level of device created
-        m_d3dContext.ReleaseAndGetAddressOf()   // returns the device immediate context
+        Direct3DObject::m_d3dContext.ReleaseAndGetAddressOf()   // returns the device immediate context
         );
 
     if ( hr == E_INVALIDARG )
@@ -184,15 +184,15 @@ void Game::CreateDevice()
         // DirectX 11.0 platforms will not recognize D3D_FEATURE_LEVEL_11_1 so we need to retry without it
         hr = D3D11CreateDevice( nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr,
                                 creationFlags, &featureLevels[1], _countof(featureLevels) - 1,
-                                D3D11_SDK_VERSION, m_d3dDevice.ReleaseAndGetAddressOf(),
-                                &m_featureLevel, m_d3dContext.ReleaseAndGetAddressOf() );
+                                D3D11_SDK_VERSION, Direct3DObject::m_d3dDevice.ReleaseAndGetAddressOf(),
+                                &m_featureLevel, Direct3DObject::m_d3dContext.ReleaseAndGetAddressOf() );
     }
 
     DX::ThrowIfFailed(hr);
 
 #ifndef NDEBUG
     ComPtr<ID3D11Debug> d3dDebug;
-    hr = m_d3dDevice.As(&d3dDebug);
+    hr = Direct3DObject::m_d3dDevice.As(&d3dDebug);
     if (SUCCEEDED(hr))
     {
         ComPtr<ID3D11InfoQueue> d3dInfoQueue;
@@ -225,10 +225,10 @@ void Game::CreateResources()
 {
     // Clear the previous window size specific context.
     ID3D11RenderTargetView* nullViews [] = { nullptr };
-    m_d3dContext->OMSetRenderTargets(_countof(nullViews), nullViews, nullptr);
+    Direct3DObject::m_d3dContext->OMSetRenderTargets(_countof(nullViews), nullViews, nullptr);
     m_renderTargetView.Reset();
     m_depthStencilView.Reset();
-    m_d3dContext->Flush();
+    Direct3DObject::m_d3dContext->Flush();
 
     RECT rc;
     GetWindowRect( m_window, &rc );
@@ -261,7 +261,7 @@ void Game::CreateResources()
     {
         // First, retrieve the underlying DXGI Device from the D3D Device
         ComPtr<IDXGIDevice1> dxgiDevice;
-        DX::ThrowIfFailed(m_d3dDevice.As(&dxgiDevice));
+        DX::ThrowIfFailed(Direct3DObject::m_d3dDevice.As(&dxgiDevice));
 
         // Identify the physical adapter (GPU or card) this device is running on.
         ComPtr<IDXGIAdapter> dxgiAdapter;
@@ -276,8 +276,8 @@ void Game::CreateResources()
         if (SUCCEEDED(hr))
         {
             // DirectX 11.1 or later
-            m_d3dDevice.As( &m_d3dDevice1 );
-            m_d3dContext.As( &m_d3dContext1 );
+            Direct3DObject::m_d3dDevice.As( &Direct3DObject::m_d3dDevice1 );
+            Direct3DObject::m_d3dContext.As( &Direct3DObject::m_d3dContext1 );
 
             // Create a descriptor for the swap chain.
             DXGI_SWAP_CHAIN_DESC1 swapChainDesc = { 0 };
@@ -294,7 +294,7 @@ void Game::CreateResources()
 
             // Create a SwapChain from a CoreWindow.
             DX::ThrowIfFailed( dxgiFactory2->CreateSwapChainForHwnd(
-                m_d3dDevice.Get(), m_window, &swapChainDesc,
+                Direct3DObject::m_d3dDevice.Get(), m_window, &swapChainDesc,
                 &fsSwapChainDesc,
                 nullptr, m_swapChain1.ReleaseAndGetAddressOf() ) );
 
@@ -313,7 +313,7 @@ void Game::CreateResources()
             swapChainDesc.SampleDesc.Quality = 0;
             swapChainDesc.Windowed = TRUE;
 
-            DX::ThrowIfFailed( dxgiFactory->CreateSwapChain( m_d3dDevice.Get(), &swapChainDesc, m_swapChain.ReleaseAndGetAddressOf() ) );
+            DX::ThrowIfFailed( dxgiFactory->CreateSwapChain( Direct3DObject::m_d3dDevice.Get(), &swapChainDesc, m_swapChain.ReleaseAndGetAddressOf() ) );
         }
 
         // This template does not support 'full-screen' mode and prevents the ALT+ENTER shortcut from working
@@ -325,23 +325,23 @@ void Game::CreateResources()
     DX::ThrowIfFailed(m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), &backBuffer));
 
     // Create a view interface on the rendertarget to use on bind.
-    DX::ThrowIfFailed(m_d3dDevice->CreateRenderTargetView(backBuffer.Get(), nullptr, m_renderTargetView.ReleaseAndGetAddressOf()));
+    DX::ThrowIfFailed(Direct3DObject::m_d3dDevice->CreateRenderTargetView(backBuffer.Get(), nullptr, m_renderTargetView.ReleaseAndGetAddressOf()));
 
     // Allocate a 2-D surface as the depth/stencil buffer and
     // create a DepthStencil view on this surface to use on bind.
     CD3D11_TEXTURE2D_DESC depthStencilDesc(depthBufferFormat, backBufferWidth, backBufferHeight, 1, 1, D3D11_BIND_DEPTH_STENCIL);
 
     ComPtr<ID3D11Texture2D> depthStencil;
-    DX::ThrowIfFailed(m_d3dDevice->CreateTexture2D(&depthStencilDesc, nullptr, depthStencil.GetAddressOf()));
+    DX::ThrowIfFailed(Direct3DObject::m_d3dDevice->CreateTexture2D(&depthStencilDesc, nullptr, depthStencil.GetAddressOf()));
 
     CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2D);
-    DX::ThrowIfFailed(m_d3dDevice->CreateDepthStencilView(depthStencil.Get(), &depthStencilViewDesc, m_depthStencilView.ReleaseAndGetAddressOf()));
+    DX::ThrowIfFailed(Direct3DObject::m_d3dDevice->CreateDepthStencilView(depthStencil.Get(), &depthStencilViewDesc, m_depthStencilView.ReleaseAndGetAddressOf()));
 
     // Create a viewport descriptor of the full window size.
     CD3D11_VIEWPORT viewPort(0.0f, 0.0f, static_cast<float>(backBufferWidth), static_cast<float>(backBufferHeight));
 
     // Set the current viewport using the descriptor.
-    m_d3dContext->RSSetViewports(1, &viewPort);
+    Direct3DObject::m_d3dContext->RSSetViewports(1, &viewPort);
 
     // TODO: Initialize windows-size dependent objects here
 }
@@ -355,10 +355,10 @@ void Game::OnDeviceLost()
     m_renderTargetView.Reset();
     m_swapChain1.Reset();
     m_swapChain.Reset();
-    m_d3dContext1.Reset();
-    m_d3dContext.Reset();
-    m_d3dDevice1.Reset();
-    m_d3dDevice.Reset();
+    Direct3DObject::m_d3dContext1.Reset();
+    Direct3DObject::m_d3dContext.Reset();
+    Direct3DObject::m_d3dDevice1.Reset();
+    Direct3DObject::m_d3dDevice.Reset();
 
     CreateDevice();
 

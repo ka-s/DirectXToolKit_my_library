@@ -39,6 +39,10 @@
 #include "VertexTypes.h"
 #include "WICTextureLoader.h"
 
+// ©ìƒtƒ@ƒCƒ‹
+#include "Direct3DObject.h"
+#include "ScreenManager.h"
+
 namespace DX
 {
     inline void ThrowIfFailed(HRESULT hr)
