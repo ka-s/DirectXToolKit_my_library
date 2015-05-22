@@ -4,11 +4,15 @@
 
 // @author ka-s
 
+#pragma once
+
 #include "pch.h"
 
 class ScreenManager
 {
 private:
+    // SpriteBatch
+    std::unique_ptr<DirectX::SpriteBatch> sprite_batch;
 
 public:
     // ‰Šú‰»
