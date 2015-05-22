@@ -11,6 +11,35 @@
 // provides a game loop
 class Game
 {
+private:
+
+    void Update(DX::StepTimer const& timer);
+
+    void CreateDevice();
+    void CreateResources();
+
+    void OnDeviceLost();
+
+    // Application state
+    HWND                                            m_window;
+
+    // Direct3D Objects
+    D3D_FEATURE_LEVEL                               m_featureLevel;
+    Microsoft::WRL::ComPtr<ID3D11Device>            m_d3dDevice;
+    Microsoft::WRL::ComPtr<ID3D11Device1>           m_d3dDevice1;
+    Microsoft::WRL::ComPtr<ID3D11DeviceContext>     m_d3dContext;
+    Microsoft::WRL::ComPtr<ID3D11DeviceContext1>    m_d3dContext1;
+
+    // Rendering resources
+    Microsoft::WRL::ComPtr<IDXGISwapChain>          m_swapChain;
+    Microsoft::WRL::ComPtr<IDXGISwapChain1>         m_swapChain1;
+    Microsoft::WRL::ComPtr<ID3D11RenderTargetView>  m_renderTargetView;
+    Microsoft::WRL::ComPtr<ID3D11DepthStencilView>  m_depthStencilView;
+    Microsoft::WRL::ComPtr<ID3D11Texture2D>         m_depthStencil;
+
+    // Game state
+    DX::StepTimer                                   m_timer;
+
 public:
 
     Game();
@@ -35,33 +64,4 @@ public:
 
     // Properites
     void GetDefaultSize( size_t& width, size_t& height ) const;
-
-private:
-
-    void Update(DX::StepTimer const& timer);
-
-    void CreateDevice();
-    void CreateResources();
-    
-    void OnDeviceLost();
-
-    // Application state
-    HWND                                            m_window;
-
-    // Direct3D Objects
-    D3D_FEATURE_LEVEL                               m_featureLevel;
-    Microsoft::WRL::ComPtr<ID3D11Device>            m_d3dDevice;
-    Microsoft::WRL::ComPtr<ID3D11Device1>           m_d3dDevice1;
-    Microsoft::WRL::ComPtr<ID3D11DeviceContext>     m_d3dContext;
-    Microsoft::WRL::ComPtr<ID3D11DeviceContext1>    m_d3dContext1;
-
-    // Rendering resources
-    Microsoft::WRL::ComPtr<IDXGISwapChain>          m_swapChain;
-    Microsoft::WRL::ComPtr<IDXGISwapChain1>         m_swapChain1;
-    Microsoft::WRL::ComPtr<ID3D11RenderTargetView>  m_renderTargetView;
-    Microsoft::WRL::ComPtr<ID3D11DepthStencilView>  m_depthStencilView;
-    Microsoft::WRL::ComPtr<ID3D11Texture2D>         m_depthStencil;
-
-    // Game state
-    DX::StepTimer                                   m_timer;
 };

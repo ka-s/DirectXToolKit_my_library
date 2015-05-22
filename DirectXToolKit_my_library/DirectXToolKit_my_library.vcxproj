@@ -158,10 +158,12 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="Src\ScreenManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="Src\ScreenManager.h" />
     <ClInclude Include="src\StepTimer.h" />
   </ItemGroup>
   <ItemGroup>
