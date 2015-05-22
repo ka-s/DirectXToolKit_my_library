@@ -155,12 +155,14 @@
     <Manifest Include="settings.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Direct3DObject.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="Src\ScreenManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Direct3DObject.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="Src\ScreenManager.h" />
