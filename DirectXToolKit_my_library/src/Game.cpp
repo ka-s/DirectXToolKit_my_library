@@ -26,6 +26,11 @@ void Game::Initialize(HWND window)
 
     CreateResources();
 
+    // 画面管理クラスを作成
+    screen_manager = std::make_shared<ScreenManager>();
+    // 画面管理クラス初期化
+    screen_manager->Init();
+
     // TODO: Change the timer settings if you want something other than the default variable timestep mode.
     // e.g. for 60 FPS fixed timestep update logic, call:
     /*
@@ -51,6 +56,9 @@ void Game::Update(DX::StepTimer const& timer)
     float elapsedTime = float(timer.GetElapsedSeconds());
 
     // TODO: Add your game logic here
+    // 画面管理クラス更新
+    screen_manager->Update();
+
     elapsedTime;
 }
 
@@ -64,6 +72,7 @@ void Game::Render()
     Clear();
 
     // TODO: Add your rendering code here
+    screen_manager->Render();
 
     Present();
 }
