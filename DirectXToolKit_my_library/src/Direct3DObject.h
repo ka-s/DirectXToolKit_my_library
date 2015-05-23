@@ -21,5 +21,7 @@ public:
 
     // SpriteBatch
     static std::unique_ptr<DirectX::SpriteBatch> sprite_batch;
+    // Alphaブレンド用ステータス
+    static std::unique_ptr<DirectX::CommonStates> alpha_states;
 
 };

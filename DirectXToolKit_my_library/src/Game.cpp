@@ -71,8 +71,15 @@ void Game::Render()
 
     Clear();
 
+    // SpriteBatch描画開始
+    Direct3DObject::sprite_batch->Begin(
+        SpriteSortMode_Deferred, Direct3DObject::alpha_states->NonPremultiplied());
+
     // TODO: Add your rendering code here
     screen_manager->Render();
+
+    // SpriteBatch描画物をGPUに転送
+    Direct3DObject::sprite_batch->End();
 
     Present();
 }
@@ -218,6 +225,10 @@ void Game::CreateDevice()
 #endif
 
     // TODO: Initialize device dependent objects here (independent of window size)
+    // SpriteBatch初期化
+    Direct3DObject::sprite_batch.reset(new SpriteBatch(Direct3DObject::m_d3dContext.Get()));
+    // Alphaブレンド用ステータス初期化
+    Direct3DObject::alpha_states.reset(new CommonStates(Direct3DObject::m_d3dDevice.Get()));
 }
 
 // Allocate all memory resources that change on a window SizeChanged event.

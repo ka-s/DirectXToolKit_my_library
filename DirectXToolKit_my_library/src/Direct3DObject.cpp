@@ -17,4 +17,5 @@ Microsoft::WRL::ComPtr<ID3D11DeviceContext>     Direct3DObject::m_d3dContext;
 Microsoft::WRL::ComPtr<ID3D11DeviceContext1>    Direct3DObject::m_d3dContext1;
 
 // SpriteBatch
-std::unique_ptr<SpriteBatch>  Direct3DObject::sprite_batch;
+std::unique_ptr<SpriteBatch>                    Direct3DObject::sprite_batch;
+std::unique_ptr<DirectX::CommonStates>          Direct3DObject::alpha_states;

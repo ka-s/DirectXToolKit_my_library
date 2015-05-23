@@ -12,9 +12,6 @@
 class ScreenManager
 {
 private:
-    // Alphaブレンド用ステータス
-    std::unique_ptr<DirectX::CommonStates> alpha_states;
-
     // Textureデータ
     kas::Texture t_test;
 
