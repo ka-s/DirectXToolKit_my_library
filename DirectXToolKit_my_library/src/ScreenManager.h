@@ -12,13 +12,10 @@
 class ScreenManager
 {
 private:
-    // SpriteBatch
-    std::unique_ptr<DirectX::SpriteBatch> sprite_batch;
     // Alphaブレンド用ステータス
     std::unique_ptr<DirectX::CommonStates> alpha_states;
 
     // Textureデータ
-    //Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> t_test;
     kas::Texture t_test;
 
 public:

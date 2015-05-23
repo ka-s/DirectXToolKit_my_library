@@ -9,6 +9,7 @@
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
+using namespace kas;
 
 using Microsoft::WRL::ComPtr;
 
@@ -16,15 +17,12 @@ using Microsoft::WRL::ComPtr;
 void ScreenManager::Init()
 {
     // SpriteBatch初期化
-    sprite_batch.reset(new SpriteBatch(Direct3DObject::m_d3dContext.Get()));
+    Direct3DObject::sprite_batch.reset(new SpriteBatch(Direct3DObject::m_d3dContext.Get()));
     // Alphaブレンド用ステータス初期化
     alpha_states.reset(new CommonStates(Direct3DObject::m_d3dDevice.Get()));
 
     // Test用Texture読み込み
-    //CreateWICTextureFromFile(Direct3DObject::m_d3dDevice.Get(), 
-    //                         L"Data/Graph/cat.png", nullptr,
-    //                         t_test.ReleaseAndGetAddressOf());
-    t_test = kas::Texture(L"Data/Graph/cat.png");
+    t_test = Texture(L"Data/Graph/cat.png");
 }
 
 // 終了
@@ -43,11 +41,11 @@ void ScreenManager::Update()
 void ScreenManager::Render()
 {
     // SpriteBatch描画開始
-    sprite_batch->Begin(SpriteSortMode_Deferred, alpha_states->NonPremultiplied());
+    Direct3DObject::sprite_batch->Begin(SpriteSortMode_Deferred, alpha_states->NonPremultiplied());
 
     // 何かを描画
-    sprite_batch->Draw(t_test.Get().Get(), Vector2(0.f, 0.f));
+    t_test.render();
 
     // SpriteBatch描画物をGPUに転送
-    sprite_batch->End();
+    Direct3DObject::sprite_batch->End();
 }

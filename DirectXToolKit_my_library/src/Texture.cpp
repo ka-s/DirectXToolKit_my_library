@@ -16,7 +16,7 @@ using Microsoft::WRL::ComPtr;
 // デフォルトコンストラクタ
 Texture::Texture()
 {
-
+    texture_data = nullptr;
 }
 
 // コンストラクタ
@@ -34,4 +34,10 @@ Texture::Texture(wchar_t *pass)
 Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> Texture::Get()
 {
     return texture_data;
+}
+
+// テクスチャレンダリング
+void Texture::render()
+{
+    Direct3DObject::sprite_batch->Draw(texture_data.Get(), Vector2(0.f, 0.f));
 }

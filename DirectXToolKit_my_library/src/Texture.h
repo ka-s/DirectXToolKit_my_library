@@ -26,6 +26,8 @@ namespace kas
         // テクスチャ取得
         //   @return テクスチャデータ
         Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> Get();
+        // テクスチャレンダリング
+        void render();
 
     };
 }

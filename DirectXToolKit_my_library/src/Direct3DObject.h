@@ -19,4 +19,7 @@ public:
     static Microsoft::WRL::ComPtr<ID3D11DeviceContext>     m_d3dContext;
     static Microsoft::WRL::ComPtr<ID3D11DeviceContext1>    m_d3dContext1;
 
+    // SpriteBatch
+    static std::unique_ptr<DirectX::SpriteBatch> sprite_batch;
+
 };
