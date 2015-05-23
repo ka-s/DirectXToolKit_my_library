@@ -14,6 +14,7 @@ class ScreenManager
 private:
     // Textureƒf[ƒ^
     kas::Texture t_test;
+    kas::Texture t_cat;
 
 public:
     // ‰Šú‰»

@@ -23,6 +23,7 @@ void ScreenManager::Init()
 {
     // Test—pTexture“Ç‚İ‚İ
     t_test = Texture(L"Data/Graph/cat.png");
+    t_cat = Texture(L"Data/Graph/cat2.png");
 }
 
 // I—¹
@@ -41,5 +42,6 @@ void ScreenManager::Update()
 void ScreenManager::Render()
 {
     // ‰½‚©‚ğ•`‰æ
-    t_test.render(Vector2(0.f, 0.f), true, Vector2::One, rotate);
+    t_cat.render(Vector2(0.f, 0.f), false, Vector2(0.5f, 0.5f), 0.f);
+    t_test.render(Vector2(100.f, 100.f), true, Vector2::One, rotate);
 }
