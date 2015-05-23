@@ -14,7 +14,7 @@ using namespace DirectX::SimpleMath;
 void ScreenManager::Init()
 {
     // SpriteBatch‰Šú‰»
-    //sprite_batch.reset(new SpriteBatch(m_d3dContext));
+    sprite_batch.reset(new SpriteBatch(Direct3DObject::m_d3dContext.Get()));
 }
 
 // I—¹
@@ -32,5 +32,12 @@ void ScreenManager::Update()
 // •`‰æ
 void ScreenManager::Render()
 {
+    // SpriteBatch•`‰æŠJn
+    sprite_batch->Begin();
 
+    // ‰½‚©‚ğ•`‰æ
+    sprite_batch->Draw(nullptr, Vector2(0.f, 0.f));
+
+    // SpriteBatch•`‰æ•¨‚ğGPU‚É“]‘—
+    sprite_batch->End();
 }
