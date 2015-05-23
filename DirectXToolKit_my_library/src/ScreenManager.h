@@ -7,6 +7,7 @@
 #pragma once
 
 #include "pch.h"
+#include "Texture.h"
 
 class ScreenManager
 {
@@ -17,7 +18,8 @@ private:
     std::unique_ptr<DirectX::CommonStates> alpha_states;
 
     // Textureƒf[ƒ^
-    Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> t_test;
+    //Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> t_test;
+    kas::Texture t_test;
 
 public:
     // ‰Šú‰»
