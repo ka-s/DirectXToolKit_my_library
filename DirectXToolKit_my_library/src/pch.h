@@ -42,6 +42,7 @@
 // ©ìƒtƒ@ƒCƒ‹
 #include "Direct3DObject.h"
 #include "ScreenManager.h"
+#include "Texture.h"
 
 namespace DX
 {

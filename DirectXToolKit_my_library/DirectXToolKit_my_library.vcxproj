@@ -161,6 +161,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="Src\ScreenManager.cpp" />
+    <ClCompile Include="Src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Direct3DObject.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="Src\ScreenManager.h" />
     <ClInclude Include="src\StepTimer.h" />
+    <ClInclude Include="Src\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
