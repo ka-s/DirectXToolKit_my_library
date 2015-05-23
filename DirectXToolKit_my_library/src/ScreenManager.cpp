@@ -13,6 +13,11 @@ using namespace kas;
 
 using Microsoft::WRL::ComPtr;
 
+namespace
+{
+    float rotate = 0.f;
+}
+
 // ‰Šú‰»
 void ScreenManager::Init()
 {
@@ -29,12 +34,12 @@ void ScreenManager::Fin()
 // XV
 void ScreenManager::Update()
 {
-
+    rotate += 0.1f;
 }
 
 // •`‰æ
 void ScreenManager::Render()
 {
     // ‰½‚©‚ğ•`‰æ
-    t_test.render();
+    t_test.render(Vector2(0.f, 0.f), true, Vector2::One, rotate);
 }
