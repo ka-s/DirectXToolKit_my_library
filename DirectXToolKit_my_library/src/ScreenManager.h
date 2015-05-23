@@ -14,6 +14,9 @@ private:
     // SpriteBatch
     std::unique_ptr<DirectX::SpriteBatch> sprite_batch;
 
+    // Textureƒf[ƒ^
+    Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> t_test;
+
 public:
     // ‰Šú‰»
     void Init();
