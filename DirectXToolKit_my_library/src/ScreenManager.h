@@ -15,6 +15,7 @@ private:
     // Textureデータ
     kas::Texture t_test;
     kas::Texture t_cat;
+    kas::Texture t_earth;
 
     // 基本ジオメトリ
     std::unique_ptr<DirectX::GeometricPrimitive> m_shape;

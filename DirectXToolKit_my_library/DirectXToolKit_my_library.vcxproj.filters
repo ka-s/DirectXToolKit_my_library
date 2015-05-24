@@ -32,6 +32,9 @@
     <Image Include="Data\Graph\cat2.png">
       <Filter>Resource Files\Graph</Filter>
     </Image>
+    <Image Include="Data\Graph\earth.bmp">
+      <Filter>Resource Files\Graph</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="settings.manifest">

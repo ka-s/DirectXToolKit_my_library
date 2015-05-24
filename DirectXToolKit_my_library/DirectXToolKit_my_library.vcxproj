@@ -151,6 +151,7 @@
   <ItemGroup>
     <Image Include="Data\Graph\cat.png" />
     <Image Include="Data\Graph\cat2.png" />
+    <Image Include="Data\Graph\earth.bmp" />
     <Image Include="directx.ico" />
   </ItemGroup>
   <ItemGroup>
