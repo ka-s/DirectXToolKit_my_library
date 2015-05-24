@@ -16,6 +16,12 @@ private:
     kas::Texture t_test;
     kas::Texture t_cat;
 
+    // 基本ジオメトリ
+    std::unique_ptr<DirectX::GeometricPrimitive> m_shape;
+    DirectX::SimpleMath::Matrix m_world;
+    DirectX::SimpleMath::Matrix m_view;
+    DirectX::SimpleMath::Matrix m_proj;
+
 public:
     // 初期化
     void Init();
