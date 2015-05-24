@@ -26,12 +26,27 @@ void ScreenManager::Init()
     t_cat = Texture(L"Data/Graph/cat2.png");
     t_earth = Texture(L"Data/Graph/earth.bmp");
 
+    // ライティング
+    lights_effect.reset(new BasicEffect(Direct3DObject::m_d3dDevice.Get()));
+    lights_effect->SetTextureEnabled(true);
+    lights_effect->SetPerPixelLighting(true);
+    lights_effect->SetLightingEnabled(true);
+    lights_effect->SetLightEnabled(0, true);
+    lights_effect->SetLightDiffuseColor(0, Colors::White);
+    lights_effect->SetLightDirection(0, -Vector3::UnitY);
+    lights_effect->SetTexture(t_earth.Get().Get());
+
     // 基本ジオメトリ
-    m_shape = GeometricPrimitive::CreateTeapot(Direct3DObject::m_d3dContext.Get());
+    m_shape = GeometricPrimitive::CreateSphere(Direct3DObject::m_d3dContext.Get());
+    m_shape->CreateInputLayout(lights_effect.get(),
+                               m_inputLayout.ReleaseAndGetAddressOf());
     m_world = Matrix::Identity;
     m_view = Matrix::CreateLookAt(Vector3(0.f, 2.f, 2.f), Vector3::Zero, Vector3::UnitY);
     m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f,
                                                   800.f / 600.f, 0.1f, 10.f);
+
+    lights_effect->SetView(m_view);
+    lights_effect->SetProjection(m_proj);
 }
 
 // 終了
@@ -53,6 +68,7 @@ void ScreenManager::Render()
     t_cat.render(Vector2(0.f, 0.f), false, Vector2(0.5f, 0.5f), 0.f);
     t_test.render(Vector2(100.f, 100.f), true, Vector2::One, rotate);
 
+    lights_effect->SetWorld(m_world);
     // 基本ジオメトリ
-    m_shape->Draw(m_world, m_view, m_proj, Colors::White, t_earth.Get().Get());
+    m_shape->Draw(lights_effect.get(), m_inputLayout.Get());
 }

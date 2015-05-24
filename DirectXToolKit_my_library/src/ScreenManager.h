@@ -23,6 +23,11 @@ private:
     DirectX::SimpleMath::Matrix m_view;
     DirectX::SimpleMath::Matrix m_proj;
 
+    // ライティング
+    // 光源
+    std::unique_ptr<DirectX::BasicEffect> lights_effect;
+    Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
+
 public:
     // 初期化
     void Init();
